@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.learn.dao.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.example.learn.domain.Notice">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="imgs" jdbcType="OTHER" property="imgs" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="notice_time" jdbcType="INTEGER" property="noticeTime" />
+    <result column="has_file" jdbcType="TINYINT" property="hasFile" />
+    <result column="files" jdbcType="OTHER" property="files" />
+    <result column="watch_users" jdbcType="OTHER" property="watchUsers" />
+    <result column="watch_num" jdbcType="INTEGER" property="watchNum" />
+    <result column="like_users" jdbcType="OTHER" property="likeUsers" />
+    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.learn.domain.Notice">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, status, type, creator_id, group_id, title, imgs, note, create_time, notice_time, 
+    has_file, files, watch_users, watch_num, like_users, like_num
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from notice
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from notice
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.learn.domain.Notice">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into notice (status, type, creator_id, 
+      group_id, title, imgs, 
+      note, create_time, notice_time, 
+      has_file, files, watch_users, 
+      watch_num, like_users, like_num, 
+      content)
+    values (#{status,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{creatorId,jdbcType=VARCHAR}, 
+      #{groupId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{imgs,jdbcType=OTHER}, 
+      #{note,jdbcType=VARCHAR}, #{createTime,jdbcType=INTEGER}, #{noticeTime,jdbcType=INTEGER}, 
+      #{hasFile,jdbcType=TINYINT}, #{files,jdbcType=OTHER}, #{watchUsers,jdbcType=OTHER}, 
+      #{watchNum,jdbcType=INTEGER}, #{likeUsers,jdbcType=OTHER}, #{likeNum,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.learn.domain.Notice">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="status != null">
+        status,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="imgs != null">
+        imgs,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="noticeTime != null">
+        notice_time,
+      </if>
+      <if test="hasFile != null">
+        has_file,
+      </if>
+      <if test="files != null">
+        files,
+      </if>
+      <if test="watchUsers != null">
+        watch_users,
+      </if>
+      <if test="watchNum != null">
+        watch_num,
+      </if>
+      <if test="likeUsers != null">
+        like_users,
+      </if>
+      <if test="likeNum != null">
+        like_num,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="imgs != null">
+        #{imgs,jdbcType=OTHER},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="noticeTime != null">
+        #{noticeTime,jdbcType=INTEGER},
+      </if>
+      <if test="hasFile != null">
+        #{hasFile,jdbcType=TINYINT},
+      </if>
+      <if test="files != null">
+        #{files,jdbcType=OTHER},
+      </if>
+      <if test="watchUsers != null">
+        #{watchUsers,jdbcType=OTHER},
+      </if>
+      <if test="watchNum != null">
+        #{watchNum,jdbcType=INTEGER},
+      </if>
+      <if test="likeUsers != null">
+        #{likeUsers,jdbcType=OTHER},
+      </if>
+      <if test="likeNum != null">
+        #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.learn.domain.Notice">
+    update notice
+    <set>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="imgs != null">
+        imgs = #{imgs,jdbcType=OTHER},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="noticeTime != null">
+        notice_time = #{noticeTime,jdbcType=INTEGER},
+      </if>
+      <if test="hasFile != null">
+        has_file = #{hasFile,jdbcType=TINYINT},
+      </if>
+      <if test="files != null">
+        files = #{files,jdbcType=OTHER},
+      </if>
+      <if test="watchUsers != null">
+        watch_users = #{watchUsers,jdbcType=OTHER},
+      </if>
+      <if test="watchNum != null">
+        watch_num = #{watchNum,jdbcType=INTEGER},
+      </if>
+      <if test="likeUsers != null">
+        like_users = #{likeUsers,jdbcType=OTHER},
+      </if>
+      <if test="likeNum != null">
+        like_num = #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.learn.domain.Notice">
+    update notice
+    set status = #{status,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      creator_id = #{creatorId,jdbcType=VARCHAR},
+      group_id = #{groupId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      imgs = #{imgs,jdbcType=OTHER},
+      note = #{note,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=INTEGER},
+      notice_time = #{noticeTime,jdbcType=INTEGER},
+      has_file = #{hasFile,jdbcType=TINYINT},
+      files = #{files,jdbcType=OTHER},
+      watch_users = #{watchUsers,jdbcType=OTHER},
+      watch_num = #{watchNum,jdbcType=INTEGER},
+      like_users = #{likeUsers,jdbcType=OTHER},
+      like_num = #{likeNum,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.learn.domain.Notice">
+    update notice
+    set status = #{status,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      creator_id = #{creatorId,jdbcType=VARCHAR},
+      group_id = #{groupId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      imgs = #{imgs,jdbcType=OTHER},
+      note = #{note,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=INTEGER},
+      notice_time = #{noticeTime,jdbcType=INTEGER},
+      has_file = #{hasFile,jdbcType=TINYINT},
+      files = #{files,jdbcType=OTHER},
+      watch_users = #{watchUsers,jdbcType=OTHER},
+      watch_num = #{watchNum,jdbcType=INTEGER},
+      like_users = #{likeUsers,jdbcType=OTHER},
+      like_num = #{likeNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

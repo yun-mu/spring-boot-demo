@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.learn.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.example.learn.domain.User">
+    <id column="union_id" jdbcType="CHAR" property="unionId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="open_id" jdbcType="CHAR" property="openId" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="stu_no" jdbcType="VARCHAR" property="stuNo" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="class" jdbcType="VARCHAR" property="userClass" />
+    <result column="college" jdbcType="VARCHAR" property="college" />
+    <result column="own_groups" jdbcType="OTHER" property="ownGroups" />
+    <result column="manage_groups" jdbcType="OTHER" property="manageGroups" />
+    <result column="join_groups" jdbcType="OTHER" property="joinGroups" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    union_id, status, open_id, nickname, avatar_url, gender, country, province, city, 
+    language, stu_no, name, school, class, college, own_groups, manage_groups, join_groups
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where union_id = #{unionId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where union_id = #{unionId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.learn.domain.User">
+    <selectKey keyProperty="unionId" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (status, open_id, nickname, 
+      avatar_url, gender, country, 
+      province, city, language, 
+      stu_no, name, school, 
+      class, college, own_groups, 
+      manage_groups, join_groups)
+    values (#{status,jdbcType=TINYINT}, #{openId,jdbcType=CHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{avatarUrl,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{country,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
+      #{stuNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{userClass,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, #{ownGroups,jdbcType=OTHER}, 
+      #{manageGroups,jdbcType=OTHER}, #{joinGroups,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.learn.domain.User">
+    <selectKey keyProperty="unionId" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="status != null">
+        status,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="avatarUrl != null">
+        avatar_url,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="language != null">
+        language,
+      </if>
+      <if test="stuNo != null">
+        stu_no,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="userClass != null">
+        class,
+      </if>
+      <if test="college != null">
+        college,
+      </if>
+      <if test="ownGroups != null">
+        own_groups,
+      </if>
+      <if test="manageGroups != null">
+        manage_groups,
+      </if>
+      <if test="joinGroups != null">
+        join_groups,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=CHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNo != null">
+        #{stuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="userClass != null">
+        #{userClass,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="ownGroups != null">
+        #{ownGroups,jdbcType=OTHER},
+      </if>
+      <if test="manageGroups != null">
+        #{manageGroups,jdbcType=OTHER},
+      </if>
+      <if test="joinGroups != null">
+        #{joinGroups,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.learn.domain.User">
+    update user
+    <set>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=CHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null">
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNo != null">
+        stu_no = #{stuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="userClass != null">
+        class = #{userClass,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        college = #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="ownGroups != null">
+        own_groups = #{ownGroups,jdbcType=OTHER},
+      </if>
+      <if test="manageGroups != null">
+        manage_groups = #{manageGroups,jdbcType=OTHER},
+      </if>
+      <if test="joinGroups != null">
+        join_groups = #{joinGroups,jdbcType=OTHER},
+      </if>
+    </set>
+    where union_id = #{unionId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.learn.domain.User">
+    update user
+    set status = #{status,jdbcType=TINYINT},
+      open_id = #{openId,jdbcType=CHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      country = #{country,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      stu_no = #{stuNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      class = #{userClass,jdbcType=VARCHAR},
+      college = #{college,jdbcType=VARCHAR},
+      own_groups = #{ownGroups,jdbcType=OTHER},
+      manage_groups = #{manageGroups,jdbcType=OTHER},
+      join_groups = #{joinGroups,jdbcType=OTHER}
+    where union_id = #{unionId,jdbcType=CHAR}
+  </update>
+</mapper>
